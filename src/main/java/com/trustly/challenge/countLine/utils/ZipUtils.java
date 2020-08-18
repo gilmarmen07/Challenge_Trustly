@@ -15,7 +15,7 @@ import com.trustly.challenge.countLine.model.GithubFile;
 
 public class ZipUtils {
 	
-	public static List<GithubFile> readZipStream(URL url) throws IOException {
+	public static List<GithubFile> readZipStream(URL url, String user, String name) throws IOException {
 		
 		List<GithubFile> list = new ArrayList<GithubFile>();
 		
@@ -32,6 +32,8 @@ public class ZipUtils {
 		    	String[] path = entry.getName().split("/");
 		    	String[] file = path[path.length - 1].split("[.]");
 		    	
+		    	githubFile.setUserGithub(user);
+		    	githubFile.setNameGithub(name);
 		    	githubFile.setDescription(entry.getName());
 		    	githubFile.setExtension(file[file.length - 1]);
 		    	githubFile.setSize(entry.getSize());

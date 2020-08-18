@@ -3,11 +3,9 @@ package com.trustly.challenge.countLine.services;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.trustly.challenge.countLine.exception.ObjectNotFoundException;
 import com.trustly.challenge.countLine.model.GithubFile;
 import com.trustly.challenge.countLine.repository.GithubFileRepository;
 import com.trustly.challenge.countLine.utils.ZipUtils;
@@ -24,20 +22,6 @@ public class GithubFileGroupService {
 		return githubFileRepository.findAll();
 	}
 	
-	public GithubFile findById(Long id) {
-		Optional<GithubFile> obj = githubFileRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Repository not found"));
-	}
-
-	public GithubFile insert(GithubFile obj) {
-		return githubFileRepository.insert(obj);
-	}
-	
-	public void delete(Long id) {
-		this.findById(id);
-		githubFileRepository.deleteById(id);
-	}
-	
 	//Load repository by name and user from database
 	public List<GithubFile> loadFromRepository(String user, String name) {
 		GithubFile filter = new GithubFile(user, name);
@@ -50,7 +34,7 @@ public class GithubFileGroupService {
 		List<GithubFile> repository = loadFromRepository(user, name);		
 		if (repository.size() == 0) {
 			repository = this.serch(user, name);
-		}		
+		}	
 		return repository;
 	}
 
@@ -59,7 +43,7 @@ public class GithubFileGroupService {
 		try {
 			URL url = new URL("https://github.com/"+user+"/"+name+"/archive/master.zip");    
 	
-			list = ZipUtils.readZipStream(url);       
+			list = ZipUtils.readZipStream(url, user, name);       
 
 			githubFileRepository.insert(list);
 			

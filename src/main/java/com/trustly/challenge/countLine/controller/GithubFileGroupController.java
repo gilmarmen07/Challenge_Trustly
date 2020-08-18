@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,20 +33,6 @@ public class GithubFileGroupController {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
-	@ApiOperation(value="Load repository by ID")
-	@GetMapping(value="/{id}")
-	public ResponseEntity<GithubFileDTO> loadById(@PathVariable("id") Long id) {
-		GithubFile obj = githubFileService.findById(id);		
-		return ResponseEntity.ok().body(new GithubFileDTO(obj));
-	}
-	
-	@ApiOperation(value="Delete repository by id from database")
-	@DeleteMapping(value="/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-		githubFileService.delete(id);
-		return ResponseEntity.noContent().build();
-	}
-	
 	@ApiOperation(value="Find repository by name and user from GitHub and insert in buffer ")
 	@GetMapping(value="/find")
 	public ResponseEntity<List<GithubUserGroupDTO>> findByRepository(@RequestParam(name = "user") String user, @RequestParam(name = "name") String name) {
@@ -64,6 +48,4 @@ public class GithubFileGroupController {
 		List<GithubUserGroupDTO> listDto = new GithubUserGroupDTO().toList(githubUserGroup, user, name);
 		return ResponseEntity.ok().body(listDto);
 	}
-	
-
 }
