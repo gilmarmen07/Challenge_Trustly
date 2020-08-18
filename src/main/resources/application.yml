@@ -1,6 +1,4 @@
-spring: 
-  datasource:
-    data:
-    - mongodb.uri=mongodb://localhost:27017/challengetrustlydb
 server:
   port: 8082
+
+

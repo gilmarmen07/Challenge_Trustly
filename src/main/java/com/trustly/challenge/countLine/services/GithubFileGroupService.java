@@ -10,6 +10,8 @@ import com.trustly.challenge.countLine.model.GithubFile;
 import com.trustly.challenge.countLine.repository.GithubFileRepository;
 import com.trustly.challenge.countLine.utils.ZipUtils;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Example;
 
 @Service
@@ -45,7 +47,7 @@ public class GithubFileGroupService {
 	
 			list = ZipUtils.readZipStream(url, user, name);       
 
-			githubFileRepository.insert(list);
+			this.saveAll(list);
 			
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -53,4 +55,10 @@ public class GithubFileGroupService {
 		
 		return list;
 	}
+	
+	@Transactional
+	private List<GithubFile> saveAll(List<GithubFile> list){
+		return githubFileRepository.saveAll(list);
+	}
+	
 }

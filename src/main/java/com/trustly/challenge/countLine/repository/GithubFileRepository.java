@@ -1,8 +1,11 @@
 package com.trustly.challenge.countLine.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import com.trustly.challenge.countLine.model.GithubFile;
 
-public interface GithubFileRepository extends MongoRepository<GithubFile, Long>{
+@Repository
+public interface GithubFileRepository extends JpaRepository<GithubFile, Long>{
 	
 }

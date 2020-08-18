@@ -12,7 +12,7 @@ public class GithubFileDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = -7070882141717156134L;
 
-	private String id;
+	private Long id;
 	
 	//Repository
 	private String userGithub;
@@ -90,11 +90,11 @@ public class GithubFileDTO implements Serializable {
 		return listDto;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
